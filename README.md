@@ -1,13 +1,13 @@
 # UBC Course Sniper
 
-UBC Course Sniper is a Python script that automates the process of registering for courses on the UBC Workday platform. It allows users to specify a target time and automatically clicks the registration buttons when the time arrives.
+UBC Course Sniper is a Python script that automates the process of registering for courses through a Saved Schedule on UBC Workday. It allows users to specify a target time and automatically clicks the registration buttons when the time arrives.
 
 ## Installation
 
 1. Install Python 3.12.
 2. Initialize a virtual environment and install the required dependencies by running:
 ```bash
-pip install -r requirements.txt`
+pip install -r requirements.txt
 ```
 3. **Find your version of Google Chrome and download the corresponding ChromeDriver version [here](https://googlechromelabs.github.io/chrome-for-testing/)**. 
 4. Move `chromedriver.exe` into the project folder (at the same level as `main.py`).
