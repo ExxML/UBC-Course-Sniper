@@ -1,5 +1,5 @@
 import time
-import datetime
+from datetime import datetime
 import subprocess
 import sys
 import ctypes
@@ -9,27 +9,6 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
-def run_as_admin():
-    if not ctypes.windll.shell32.IsUserAnAdmin():
-        print("This script needs to be run as Administrator. Re-launching with elevated privileges...")
-        # Relaunch the script with admin rights
-        ctypes.windll.shell32.ShellExecuteW(
-            None, "runas", sys.executable, " ".join(sys.argv), None, 1
-        )
-        sys.exit()  # Exit the original script
-
-def sync_windows_time():
-    try:
-        # Start the Windows Time service if it's not running
-        subprocess.run(["net", "start", "w32time"], shell = True, check = False)
-
-        # Resync time
-        subprocess.run(["w32tm", "/resync"], shell = True, check = True)
-        print("Time successfully synchronized with Windows Time Server.")
-
-    except subprocess.CalledProcessError:
-        print("Error syncing time. Please run this program as Administrator.")
 
 def set_chrome_settings():
     chrome_options = Options()
@@ -71,7 +50,28 @@ def set_chrome_settings():
     chrome_service = Service("./chromedriver.exe")
     chrome_service.creation_flags = 0x8000000  # Suppress logs
 
-    return chrome_service,chrome_options
+    return chrome_service, chrome_options
+
+def run_as_admin():
+    if not ctypes.windll.shell32.IsUserAnAdmin():
+        print("This script needs to be run as Administrator. Re-launching with elevated privileges...")
+        # Relaunch the script with admin rights
+        ctypes.windll.shell32.ShellExecuteW(
+            None, "runas", sys.executable, " ".join(sys.argv), None, 1
+        )
+        sys.exit()  # Exit the original script
+
+def sync_windows_time():
+    try:
+        # Start the Windows Time service if it's not running
+        subprocess.run(["net", "start", "w32time"], shell = True, check = False)
+
+        # Resync time
+        subprocess.run(["w32tm", "/resync"], shell = True, check = True)
+        print("Time successfully synchronized with Windows Time Server.")
+
+    except subprocess.CalledProcessError:
+        print("Error syncing time. Please run this program as Administrator.")
 
 if __name__ == "__main__":
     # Running the script as Administrator is required for syncing the time
@@ -89,9 +89,9 @@ if __name__ == "__main__":
     driver.get("https://wd10.myworkday.com/ubc/d/home.htmld")
 
     # Wait until exactly the course registration time (in 24-hour time)
-    year = datetime.datetime.now().year
-    month = datetime.datetime.now().month
-    day = datetime.datetime.now().day
+    year = datetime.now().year
+    month = datetime.now().month
+    day = datetime.now().day
     second = 0
     microsecond = 0
     ### MODIFY TO MATCH YOUR COURSE REGISTRATION TIME ###
@@ -99,12 +99,12 @@ if __name__ == "__main__":
     minute = #
     ### MODIFY TO MATCH YOUR COURSE REGISTRATION TIME ###
 
-    input(f"Welcome to UBC Course Sniper!\nInstructions:\n 1. ⭐ ENSURE YOUR COURSE REGISTRATION TIME IS SET CORRECTLY! ⭐\n    Your course registration time is {hour:02}:{minute:02}.\n 2. Manually log in to UBC Workday with your CWL\n 3. Open the Saved Schedule you want to register\n 4. Press `Enter` in the terminal to start the script")
+    input(f"Welcome to UBC Course Sniper!\nInstructions:\n 1. ⭐ ENSURE YOUR COURSE REGISTRATION TIME (PST) IS SET CORRECTLY! ⭐\n    Your course registration time is {hour:02}:{minute:02} PST.\n 2. Manually log in to UBC Workday with your CWL\n 3. Open the Saved Schedule you want to register\n 4. Press `Enter` in the terminal to start the script")
 
     sync_windows_time()
 
-    target_time = datetime.datetime.now().replace(year, month, day, hour, minute, second, microsecond)
-    now = datetime.datetime.now()
+    target_time = datetime.now().replace(year, month, day, hour, minute, second, microsecond)
+    now = datetime.now()
     if now > target_time:
         print(f"It is past {hour:02}:{minute:02}.")
     else:
