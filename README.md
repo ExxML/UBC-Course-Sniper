@@ -6,8 +6,7 @@ UBC Course Sniper is a Python script that automates the process of registering f
 
 1. Install Python 3.12.
 2. Initialize a virtual environment and install the required dependencies by running 
-bash
-```
+```bash
 pip install -r requirements.txt`
 ```
 3. **Find your version of Google Chrome and download the corresponding ChromeDriver version [here](https://googlechromelabs.github.io/chrome-for-testing/)**. 
