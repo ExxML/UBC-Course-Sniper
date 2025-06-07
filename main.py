@@ -88,7 +88,7 @@ if __name__ == "__main__":
     driver.set_window_size(screen_width / 2, screen_height)
     driver.get("https://wd10.myworkday.com/ubc/d/home.htmld")
 
-    # Wait until exactly the course registration time (in 24-hour time)
+    # Wait until exactly the course registration time in PST (24-hour time)
     pst_tz = timezone(timedelta(hours = -7), 'PST')
     year = datetime.now(pst_tz).year
     month = datetime.now(pst_tz).month
