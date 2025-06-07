@@ -11,7 +11,7 @@ UBC Course Sniper is a Python script that automates the process of registering f
 
 ## Usage
 
-1. ⭐ IMPORTANT: Go into `main.py` and modify the `hour` and `minute` variables to match your course registration time! These variables are marked with the comment: ` ### MODIFY TO MATCH YOUR COURSE REGISTRATION TIME ###`. ⭐
+1. ⭐ IMPORTANT: Go into `main.py` and modify the `hour` and `minute` variables to match your course registration time! These variables are marked with the comment: ` ### MODIFY TO MATCH YOUR REGISTRATION TIME ###`. ⭐
 2. ⭐ **IMPORTANT: Sync your computer time before running the program!** ⭐
 2. Run `main.py`.
 3. In the Chrome window that opens, log in to UBC Workday with your CWL.
