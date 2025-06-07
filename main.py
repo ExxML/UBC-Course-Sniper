@@ -1,16 +1,49 @@
 import time
 import datetime
+import subprocess
+import sys
+import ctypes
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+def run_as_admin():
+    if not ctypes.windll.shell32.IsUserAnAdmin():
+        print("This script needs to be run as Administrator. Re-launching with elevated privileges...")
+        # Relaunch the script with admin rights
+        ctypes.windll.shell32.ShellExecuteW(
+            None, "runas", sys.executable, " ".join(sys.argv), None, 1
+        )
+        sys.exit()  # Exit the original script
+
+def sync_windows_time():
+    try:
+        # Start the Windows Time service if it's not running
+        subprocess.run(["net", "start", "w32time"], shell = True, check = False)
+
+        # Resync time
+        subprocess.run(["w32tm", "/resync"], shell = True, check = True)
+        print("Time successfully synchronized with Windows Time Server.")
+
+    except subprocess.CalledProcessError:
+        print("Error syncing time. Please run this program as Administrator.")
+
 if __name__ == "__main__":
+    # Running the script as Administrator is required for syncing the time
+    run_as_admin()
+
+    # Get screen dimensions
+    user32 = ctypes.windll.user32
+    screen_width = user32.GetSystemMetrics(0)
+    screen_height = user32.GetSystemMetrics(1)
+
     # Initialize ChromeDriver and suppress logging
     service = Service("./chromedriver.exe")
     service.creation_flags = 0x8000000  # Suppress logs
     driver = webdriver.Chrome(service = service)
+    driver.set_window_size(screen_width / 2, screen_height)
     driver.get("https://wd10.myworkday.com/ubc/d/home.htmld")
 
     # Wait until exactly the course registration time (in 24-hour time)
@@ -24,14 +57,16 @@ if __name__ == "__main__":
     minute = #
     ### MODIFY TO MATCH YOUR COURSE REGISTRATION TIME ###
 
-    input(f"\nWelcome to UBC Course Sniper!\nInstructions:\n 1. ⭐ ENSURE YOUR COURSE REGISTRATION TIME IS SET CORRECTLY! ⭐\n    Your course registration time is {hour:02}:{minute:02}.\n 2. ⭐ SYNC YOUR COMPUTER TIME! ⭐\n 3. Manually log in to UBC Workday with your CWL\n 4. Open the Saved Schedule you want to register\n 5. Press `Enter` in the terminal to start the script")
+    input(f"\nWelcome to UBC Course Sniper!\nInstructions:\n 1. ⭐ ENSURE YOUR COURSE REGISTRATION TIME IS SET CORRECTLY! ⭐\n    Your course registration time is {hour:02}:{minute:02}.\n 2. Manually log in to UBC Workday with your CWL\n 3. Open the Saved Schedule you want to register\n 4. Press `Enter` in the terminal to start the script")
+
+    sync_windows_time()
 
     target_time = datetime.datetime.now().replace(year, month, day, hour, minute, second, microsecond)
     now = datetime.datetime.now()
     if now > target_time:
-            print(f"It is past {hour:02}:{minute:02}.")
+        print(f"It is past {hour:02}:{minute:02}.")
     else:
-        wait_seconds = (target_time - now).total_seconds() + 0.005
+        wait_seconds = (target_time - now).total_seconds() + 0.005  # 5 ms buffer to ensure the target time is reached
         print(f"Waiting {wait_seconds:.3f} seconds until {hour:02}:{minute:02}.\nDO NOT TOUCH YOUR COMPUTER except to ensure that it does not fall asleep.")
         time.sleep(wait_seconds)
 
@@ -49,8 +84,9 @@ if __name__ == "__main__":
         print("Clicked 'Register'")
 
         time.sleep(999999) # Keep Chrome open (for ~11 days)
-    except Exception as e:
-        print("ERROR: Could not find or click the registration button(s).")
+
+    except Exception:
+        print("Error finding/clicking registration button(s).")
 
     # Cleanup (optional)
     # driver.quit()
