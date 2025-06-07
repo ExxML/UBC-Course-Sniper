@@ -68,10 +68,10 @@ def sync_windows_time():
 
         # Resync time
         subprocess.run(["w32tm", "/resync"], shell = True, check = True)
-        print("Time successfully synchronized with Windows Time Server.")
+        print("\nTime successfully synchronized with Windows Time Server.")
 
     except subprocess.CalledProcessError:
-        print("Error syncing time. Please run this program as Administrator.")
+        print("\nError syncing time. Please run this program as Administrator.")
 
 if __name__ == "__main__":
     # Running the script as Administrator is required for syncing the time
@@ -94,10 +94,10 @@ if __name__ == "__main__":
     day = datetime.now().day
     second = 0
     microsecond = 0
-    ### MODIFY TO MATCH YOUR COURSE REGISTRATION TIME ###
+    ### MODIFY TO MATCH YOUR COURSE REGISTRATION TIME IN PST (24-hour time) ###
     hour = #
     minute = #
-    ### MODIFY TO MATCH YOUR COURSE REGISTRATION TIME ###
+    ### MODIFY TO MATCH YOUR COURSE REGISTRATION TIME IN PST (24-hour time) ###
 
     input(f"Welcome to UBC Course Sniper!\nInstructions:\n 1. ⭐ ENSURE YOUR COURSE REGISTRATION TIME (PST) IS SET CORRECTLY! ⭐\n    Your course registration time is {hour:02}:{minute:02} PST.\n 2. Manually log in to UBC Workday with your CWL\n 3. Open the Saved Schedule you want to register\n 4. Press `Enter` in the terminal to start the script")
 
@@ -108,7 +108,7 @@ if __name__ == "__main__":
     if now > target_time:
         print(f"It is past {hour:02}:{minute:02}.")
     else:
-        wait_seconds = (target_time - now).total_seconds() + 0.005  # 5 ms buffer to ensure the target time is reached
+        wait_seconds = (target_time - now).total_seconds()
         print(f"Waiting {wait_seconds:.3f} seconds until {hour:02}:{minute:02}.\nDO NOT TOUCH YOUR COMPUTER except to ensure that it does not fall asleep.")
         time.sleep(wait_seconds)
 
