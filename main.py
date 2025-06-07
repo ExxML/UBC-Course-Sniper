@@ -5,6 +5,7 @@ import sys
 import ctypes
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -30,6 +31,48 @@ def sync_windows_time():
     except subprocess.CalledProcessError:
         print("Error syncing time. Please run this program as Administrator.")
 
+def set_chrome_settings():
+    chrome_options = Options()
+    args = [
+        "--disable-extensions",
+        "--disable-background-networking",
+        "--disable-sync",
+        "--disable-background-timer-throttling",
+        "--disable-backgrounding-occluded-windows",
+        "--disable-client-side-phishing-detection",
+        "--disable-default-apps",
+        "--disable-hang-monitor",
+        "--disable-popup-blocking",
+        "--disable-prompt-on-repost",
+        "--disable-translate",
+        "--disable-infobars",
+        "--metrics-recording-only",
+        "--no-first-run",
+        "--safebrowsing-disable-auto-update",
+        "--mute-audio",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage"
+    ]
+
+    for arg in args:
+        chrome_options.add_argument(arg)
+
+    prefs = {
+        "profile.managed_default_content_settings.images": 2,
+        "profile.managed_default_content_settings.stylesheets": 2,
+        "profile.managed_default_content_settings.fonts": 2,
+        "profile.managed_default_content_settings.plugins": 2,
+        "profile.managed_default_content_settings.popups": 2,
+        "profile.managed_default_content_settings.geolocation": 2,
+        "profile.managed_default_content_settings.notifications": 2
+    }
+    chrome_options.add_experimental_option("prefs", prefs)
+
+    chrome_service = Service("./chromedriver.exe")
+    chrome_service.creation_flags = 0x8000000  # Suppress logs
+
+    return chrome_service,chrome_options
+
 if __name__ == "__main__":
     # Running the script as Administrator is required for syncing the time
     run_as_admin()
@@ -39,10 +82,9 @@ if __name__ == "__main__":
     screen_width = user32.GetSystemMetrics(0)
     screen_height = user32.GetSystemMetrics(1)
 
-    # Initialize ChromeDriver and suppress logging
-    service = Service("./chromedriver.exe")
-    service.creation_flags = 0x8000000  # Suppress logs
-    driver = webdriver.Chrome(service = service)
+    # Initialize ChromeDriver with optimizations
+    chrome_service, chrome_options = set_chrome_settings()
+    driver = webdriver.Chrome(service = chrome_service, options = chrome_options)
     driver.set_window_size(screen_width / 2, screen_height)
     driver.get("https://wd10.myworkday.com/ubc/d/home.htmld")
 
@@ -57,7 +99,7 @@ if __name__ == "__main__":
     minute = #
     ### MODIFY TO MATCH YOUR COURSE REGISTRATION TIME ###
 
-    input(f"\nWelcome to UBC Course Sniper!\nInstructions:\n 1. ⭐ ENSURE YOUR COURSE REGISTRATION TIME IS SET CORRECTLY! ⭐\n    Your course registration time is {hour:02}:{minute:02}.\n 2. Manually log in to UBC Workday with your CWL\n 3. Open the Saved Schedule you want to register\n 4. Press `Enter` in the terminal to start the script")
+    input(f"Welcome to UBC Course Sniper!\nInstructions:\n 1. ⭐ ENSURE YOUR COURSE REGISTRATION TIME IS SET CORRECTLY! ⭐\n    Your course registration time is {hour:02}:{minute:02}.\n 2. Manually log in to UBC Workday with your CWL\n 3. Open the Saved Schedule you want to register\n 4. Press `Enter` in the terminal to start the script")
 
     sync_windows_time()
 
