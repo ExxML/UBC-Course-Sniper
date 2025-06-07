@@ -83,10 +83,10 @@ if __name__ == "__main__":
         confirm_register_button.click()
         print("Clicked 'Register'")
 
-        time.sleep(999999) # Keep Chrome open (for ~11 days)
-
     except Exception:
-        print("Error finding/clicking registration button(s).")
+        print("ERROR FINDING/CLICKING REGISTRATION BUTTON(S).")
+
+    time.sleep(999999) # Keep Chrome open (for ~11 days)
 
     # Cleanup (optional)
     # driver.quit()
