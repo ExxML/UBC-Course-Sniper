@@ -10,23 +10,21 @@ if __name__ == "__main__":
     # Initialize ChromeDriver and suppress logging
     service = Service("./chromedriver.exe")
     service.creation_flags = 0x8000000  # Suppress logs
-
     driver = webdriver.Chrome(service = service)
     driver.get("https://wd10.myworkday.com/ubc/d/home.htmld")
 
-    input("Welcome to UBC Course Sniper!\nPlease first follow these steps:\n 1. ⭐⭐⭐⭐⭐ SYNC YOUR COMPUTER TIME!⭐⭐⭐⭐⭐\n 2. Manually log in to UBC Workday with your CWL\n 3. Open the `Saved Schedule` page of the schedule you want to register\n 4. Once you are on the page, press `Enter` in the terminal to continue.")
-
-    # Wait until exactly the course registration date (in 24-hour time)
+    # Wait until exactly the course registration time (in 24-hour time)
     year = datetime.datetime.now().year
     month = datetime.datetime.now().month
     day = datetime.datetime.now().day
     second = 0
     microsecond = 0
-
     ### MODIFY TO MATCH YOUR COURSE REGISTRATION TIME ###
-    hour = 17
-    minute = 48
-     ### MODIFY TO MATCH YOUR COURSE REGISTRATION TIME ###
+    hour = #
+    minute = #
+    ### MODIFY TO MATCH YOUR COURSE REGISTRATION TIME ###
+
+    input(f"\nWelcome to UBC Course Sniper!\nInstructions:\n 1. ⭐ ENSURE YOUR COURSE REGISTRATION TIME IS SET CORRECTLY! ⭐\n    Your course registration time is {hour:02}:{minute:02}.\n 2. ⭐ SYNC YOUR COMPUTER TIME! ⭐\n 3. Manually log in to UBC Workday with your CWL\n 4. Open the Saved Schedule you want to register\n 5. Press `Enter` in the terminal to start the script")
 
     target_time = datetime.datetime.now().replace(year, month, day, hour, minute, second, microsecond)
     now = datetime.datetime.now()
@@ -39,7 +37,7 @@ if __name__ == "__main__":
 
     # Refresh the page at the target time
     driver.refresh()
-    print("Refreshing the page.")
+    print("Refreshing the page...")
 
     try:
         register_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Start Registration')]")))
@@ -49,10 +47,10 @@ if __name__ == "__main__":
         confirm_register_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Register')]")))
         confirm_register_button.click()
         print("Clicked 'Register'")
-    except Exception as e:
-        print("Could not find or click the registration button(s).", e)
 
-    time.sleep(999999) # Keep chrome open (for ~11 days)
+        time.sleep(999999) # Keep Chrome open (for ~11 days)
+    except Exception as e:
+        print("ERROR: Could not find or click the registration button(s).")
 
     # Cleanup (optional)
     # driver.quit()
