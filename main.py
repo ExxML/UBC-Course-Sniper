@@ -1,5 +1,5 @@
 import time
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 import subprocess
 import sys
 import ctypes
@@ -89,9 +89,10 @@ if __name__ == "__main__":
     driver.get("https://wd10.myworkday.com/ubc/d/home.htmld")
 
     # Wait until exactly the course registration time (in 24-hour time)
-    year = datetime.now().year
-    month = datetime.now().month
-    day = datetime.now().day
+    pst_tz = timezone(timedelta(hours = -7), 'PST')
+    year = datetime.now(pst_tz).year
+    month = datetime.now(pst_tz).month
+    day = datetime.now(pst_tz).day
     second = 0
     microsecond = 0
     ### MODIFY TO MATCH YOUR COURSE REGISTRATION TIME IN PST (24-hour time) ###
@@ -103,8 +104,8 @@ if __name__ == "__main__":
 
     sync_windows_time()
 
-    target_time = datetime.now().replace(year, month, day, hour, minute, second, microsecond)
-    now = datetime.now()
+    target_time = datetime(year, month, day, hour, minute, second, microsecond, pst_tz)
+    now = datetime.now(pst_tz)
     if now > target_time:
         print(f"It is past {hour:02}:{minute:02}.")
     else:
