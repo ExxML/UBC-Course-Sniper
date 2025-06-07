@@ -1,6 +1,6 @@
 # UBC Course Sniper
 
-UBC Course Sniper is a Python script that automates the process of registering for courses through a Saved Schedule on UBC Workday. It allows users to specify a target time and automatically clicks the registration buttons when the time arrives.
+UBC Course Sniper is a Python script for Windows that automates the process of registering for courses through a Saved Schedule on UBC Workday. It allows users to specify a target time and automatically clicks the registration buttons when the time arrives.
 
 ## Installation
 
@@ -14,9 +14,8 @@ pip install -r requirements.txt
 
 ## Usage
 
-1. ⭐ IMPORTANT: Go into `main.py` and modify the `hour` and `minute` variables to match your course registration time! These variables are marked with the comment: `### MODIFY TO MATCH YOUR REGISTRATION TIME ###`. ⭐
-2. ⭐ **IMPORTANT: Sync your computer time before running the program!** ⭐
-2. Run `main.py`.
+1. ⭐ **IMPORTANT:** Before running the program, go into `main.py` and modify the `hour` and `minute` variables to match your course registration time! These variables are marked with the comment: `### MODIFY TO MATCH YOUR REGISTRATION TIME ###`. ⭐
+2. Run `main.py`. **You will be prompted to run the program as Administrator so that it can sync your computer time.**
 3. In the Chrome window that opens, log in to UBC Workday with your CWL.
 4. Open the Saved Schedule you want to register.
 ![alt text](SavedSchedulePreview.png)
