@@ -69,10 +69,10 @@ def sync_windows_time():
 
         # Resync time
         subprocess.run(["w32tm", "/resync"], shell = True, check = True)
-        print("\nTime successfully synchronized with Windows Time Server.")
+        print("Time successfully synchronized with Windows Time Server.")
 
     except subprocess.CalledProcessError:
-        print("\nError syncing time. Please run this program as Administrator.")
+        print("Error syncing time. Please run this program as Administrator.")
 
 if __name__ == "__main__":
     # Running the script as Administrator is required for syncing the time
@@ -108,27 +108,27 @@ if __name__ == "__main__":
     target_time = datetime(year, month, day, hour, minute, second, microsecond, pst_tz)
     now = datetime.now(pst_tz)
     if now > target_time:
-        print(f"It is past {hour:02}:{minute:02}.")
+        print(f"\nIt is past {hour:02}:{minute:02}.")
     else:
         wait_seconds = (target_time - now).total_seconds()
-        print(f"Waiting {wait_seconds:.3f} seconds until {hour:02}:{minute:02}.\nDO NOT TOUCH YOUR COMPUTER except to ensure that it does not fall asleep.")
+        print(f"\nWaiting {wait_seconds:.3f} seconds until {hour:02}:{minute:02}.\nDO NOT TOUCH YOUR COMPUTER except to ensure that it does not fall asleep.")
         time.sleep(wait_seconds)
 
     # Refresh the page at the target time
     driver.refresh()
-    print("Refreshing the page...")
+    print("\nRefreshing the page...")
 
     try:
         register_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Start Registration')]")))
         register_button.click()
-        print("Clicked 'Start Registration'")
+        print("\nClicked 'Start Registration'")
 
         confirm_register_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Register')]")))
         confirm_register_button.click()
-        print("Clicked 'Register'")
+        print("\nClicked 'Register'")
 
     except Exception:
-        print("ERROR FINDING/CLICKING REGISTRATION BUTTON(S).")
+        print("\nERROR FINDING/CLICKING REGISTRATION BUTTON(S).")
 
     time.sleep(999999) # Keep Chrome open (for ~11 days)
 
