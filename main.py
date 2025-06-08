@@ -1,5 +1,6 @@
 import time
-from datetime import datetime, timezone, timedelta
+from datetime import datetime
+from zoneinfo import ZoneInfo
 import subprocess
 import sys
 import ctypes
@@ -89,7 +90,7 @@ if __name__ == "__main__":
     driver.get("https://wd10.myworkday.com/ubc/d/home.htmld")
 
     # Wait until exactly the course registration time in PST (24-hour time)
-    pst_tz = timezone(timedelta(hours = -7), 'PST')
+    pst_tz = ZoneInfo("America/Los_Angeles")
     year = datetime.now(pst_tz).year
     month = datetime.now(pst_tz).month
     day = datetime.now(pst_tz).day
