@@ -71,8 +71,8 @@ def sync_windows_time():
         subprocess.run(["w32tm", "/resync"], shell = True, check = True)
         print("Time successfully synchronized with Windows Time Server.")
 
-    except subprocess.CalledProcessError:
-        print("Error syncing time. Please run this program as Administrator.")
+    except subprocess.CalledProcessError as e:
+        print("Error syncing time. Please run this program as Administrator.", e)
 
 if __name__ == "__main__":
     # Running the script as Administrator is required for syncing the time
@@ -127,8 +127,8 @@ if __name__ == "__main__":
         confirm_register_button.click()
         print("\nClicked 'Register'")
 
-    except Exception:
-        print("\nERROR FINDING/CLICKING REGISTRATION BUTTON(S).")
+    except Exception as e:
+        print("\nERROR FINDING/CLICKING REGISTRATION BUTTON(S).", e)
 
     time.sleep(999999) # Keep Chrome open (for ~11 days)
 
