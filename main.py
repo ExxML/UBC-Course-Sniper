@@ -89,6 +89,10 @@ if __name__ == "__main__":
     driver.set_window_size(screen_width / 2, screen_height)
     driver.get("https://wd10.myworkday.com/ubc/d/home.htmld")
 
+    input(f"Welcome to UBC Course Sniper!\nInstructions:\n 1. ⭐ ENSURE YOUR COURSE REGISTRATION TIME (PST) IS SET CORRECTLY! ⭐\n    Your course registration time is {hour:02}:{minute:02} PST.\n 2. Manually log in to UBC Workday with your CWL\n 3. Open the Saved Schedule you want to register\n 4. Press `Enter` in the terminal to start the script")
+
+    sync_windows_time()
+
     # Wait until exactly the course registration time in PST (24-hour time)
     pst_tz = ZoneInfo("America/Los_Angeles")
     year = datetime.now(pst_tz).year
@@ -100,10 +104,6 @@ if __name__ == "__main__":
     hour = #
     minute = #
     ### MODIFY TO MATCH YOUR COURSE REGISTRATION TIME IN PST (24-hour time) ###
-
-    input(f"Welcome to UBC Course Sniper!\nInstructions:\n 1. ⭐ ENSURE YOUR COURSE REGISTRATION TIME (PST) IS SET CORRECTLY! ⭐\n    Your course registration time is {hour:02}:{minute:02} PST.\n 2. Manually log in to UBC Workday with your CWL\n 3. Open the Saved Schedule you want to register\n 4. Press `Enter` in the terminal to start the script")
-
-    sync_windows_time()
 
     target_time = datetime(year, month, day, hour, minute, second, microsecond, pst_tz)
     now = datetime.now(pst_tz)
