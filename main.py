@@ -119,11 +119,11 @@ if __name__ == "__main__":
     print("\nRefreshing the page...")
 
     try:
-        register_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Start Registration')]")))
+        register_button = WebDriverWait(driver, 8).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Start Registration')]")))
         register_button.click()
         print("\nClicked 'Start Registration'")
 
-        confirm_register_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Register')]")))
+        confirm_register_button = WebDriverWait(driver, 4).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Register')]")))
         confirm_register_button.click()
         print("\nClicked 'Register'")
 
