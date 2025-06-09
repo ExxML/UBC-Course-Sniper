@@ -1,4 +1,4 @@
-import time
+import time as time_obj
 from datetime import datetime, time
 from zoneinfo import ZoneInfo
 import subprocess
@@ -99,7 +99,6 @@ if __name__ == "__main__":
     ### MODIFY TO MATCH YOUR COURSE REGISTRATION TIME IN PST (24-hour time) ###
     hour = #
     minute = #
-    ### MODIFY TO MATCH YOUR COURSE REGISTRATION TIME IN PST (24-hour time) ###
 
     reg_time = time(hour, minute)
     form_reg_time = reg_time.strftime("%I:%M %p").lstrip("0").lower()  # Formatted as 12-hour time
@@ -112,9 +111,9 @@ if __name__ == "__main__":
     if now > target_time:
         print(f"\nIt is past {hour:02}:{minute:02}.")
     else:
-        wait_seconds = (target_time - now).total_seconds()
+        wait_seconds = (target_time - now).total_seconds() - 0.100  # Decreased wait time to ensure scripts starts as close to the opening time as possible
         print(f"\nWaiting {wait_seconds:.3f} seconds until {hour:02}:{minute:02}.\nDO NOT TOUCH YOUR COMPUTER except to ensure that it does not fall asleep.")
-        time.sleep(wait_seconds)
+        time_obj.sleep(wait_seconds)
 
     # Refresh the page at the target time
     driver.refresh()
@@ -132,7 +131,7 @@ if __name__ == "__main__":
     except Exception as e:
         print("\nERROR FINDING/CLICKING REGISTRATION BUTTON(S).", e)
 
-    time.sleep(999999) # Keep Chrome open (for ~11 days)
+    time_obj.sleep(999999) # Keep Chrome open (for ~11 days)
 
     # Cleanup (optional)
     # driver.quit()
