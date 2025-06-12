@@ -134,7 +134,7 @@ if __name__ == "__main__":
         print("\nCourse registration successful. Close Chrome and the terminal to exit.")
 
     except Exception as e:
-        print("\nERROR FINDING/CLICKING REGISTRATION BUTTON(S).\nClose Chrome and the terminal to exit.\n", e)
+        print("\nERROR FINDING/CLICKING REGISTRATION BUTTON(S). Close Chrome and the terminal to exit.\n", e)
 
     time_obj.sleep(999999) # Keep Chrome open (for ~11 days)
 
