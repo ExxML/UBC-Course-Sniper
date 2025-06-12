@@ -110,12 +110,12 @@ if __name__ == "__main__":
     target_time = datetime(year, month, day, hour, minute, second, microsecond, pst_tz)
     now = datetime.now(pst_tz)
     if now > target_time:
-        print(f"\nIt is past {hour:02}:{minute:02}.")
+        print(f"\nIt is past {form_reg_time}.")
     else:
         seconds_to_target = (target_time - now).total_seconds()
         Timer(seconds_to_target - 15.000, driver.refresh).start() # Preemptive refresh for caching
         wait_seconds = seconds_to_target - 0.150  # Decreased wait time to ensure scripts starts as close to the opening time as possible
-        print(f"\nWaiting {wait_seconds:.3f} seconds until {hour:02}:{minute:02}.\nThe page will refresh ~15 seconds before the target time.\nDO NOT TOUCH YOUR COMPUTER except to ensure that it does not fall asleep.")
+        print(f"\nWaiting {wait_seconds:.3f} seconds until {form_reg_time}.\nThe page will refresh 15 seconds before the target time.\nDO NOT TOUCH YOUR COMPUTER except to ensure that it does not fall asleep.")
         time_obj.sleep(wait_seconds)
 
     # Refresh the page at the target time
@@ -123,18 +123,18 @@ if __name__ == "__main__":
     driver.refresh()
 
     try:
-        register_button = WebDriverWait(driver, 6).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Start Registration')]")))
+        register_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Start Registration')]")))
         register_button.click()
         print("\nClicked 'Start Registration'")
 
-        confirm_register_button = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Register')]")))
+        confirm_register_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Register')]")))
         confirm_register_button.click()
         print("\nClicked 'Register'")
 
         print("\nCourse registration successful. Close Chrome and the terminal to exit.")
 
     except Exception as e:
-        print("\nERROR FINDING/CLICKING REGISTRATION BUTTON(S).", e)
+        print("\nERROR FINDING/CLICKING REGISTRATION BUTTON(S).\nClose Chrome and the terminal to exit.\n", e)
 
     time_obj.sleep(999999) # Keep Chrome open (for ~11 days)
 
