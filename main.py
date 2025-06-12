@@ -101,6 +101,10 @@ if __name__ == "__main__":
     hour = #
     minute = #
 
+    # NOTE: The delay decrease **MUST NOT EVER** be larger than the "Load" value at the bottom of Inspect Element > Network,
+    #            otherwise the page will reload before the opening time.
+    early_trigger = 0.100
+
     reg_time = time(hour, minute)
     form_reg_time = reg_time.strftime("%I:%M %p").lstrip("0").lower()  # Formatted as 12-hour time
     input(f"Welcome to UBC Course Sniper!\nInstructions:\n 1. ⭐ENSURE YOUR COURSE REGISTRATION TIME (PST) IS SET CORRECTLY!⭐\n    You have set your course registration time to {form_reg_time} PST.\n 2. Manually log in to UBC Workday with your CWL.\n 3. Open the Saved Schedule you want to register.\n 4. Press `Enter` in the terminal to start the script.")
@@ -114,7 +118,7 @@ if __name__ == "__main__":
     else:
         seconds_to_target = (target_time - now).total_seconds()
         Timer(seconds_to_target - 15.000, driver.refresh).start() # Preemptive refresh for caching
-        wait_seconds = seconds_to_target - 0.150  # Decreased wait time to ensure scripts starts as close to the opening time as possible
+        wait_seconds = seconds_to_target - early_trigger  # Decreased wait time to ensure scripts starts as close to the opening time as possible
         print(f"\nWaiting {wait_seconds:.3f} seconds until {form_reg_time}.\nThe page will refresh 15 seconds before the target time.\nDO NOT TOUCH YOUR COMPUTER except to ensure that it does not fall asleep.")
         time_obj.sleep(wait_seconds)
 
