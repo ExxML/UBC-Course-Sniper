@@ -1,6 +1,7 @@
 import time as time_obj
 from datetime import datetime, time
 from zoneinfo import ZoneInfo
+from threading import Timer
 import subprocess
 import sys
 import ctypes
@@ -111,13 +112,15 @@ if __name__ == "__main__":
     if now > target_time:
         print(f"\nIt is past {hour:02}:{minute:02}.")
     else:
-        wait_seconds = (target_time - now).total_seconds() - 0.150  # Decreased wait time to ensure scripts starts as close to the opening time as possible
-        print(f"\nWaiting {wait_seconds:.3f} seconds until {hour:02}:{minute:02}.\nDO NOT TOUCH YOUR COMPUTER except to ensure that it does not fall asleep.")
+        seconds_to_target = (target_time - now).total_seconds()
+        Timer(seconds_to_target - 15.000, driver.refresh).start() # Preemptive refresh for caching
+        wait_seconds = seconds_to_target - 0.150  # Decreased wait time to ensure scripts starts as close to the opening time as possible
+        print(f"\nWaiting {wait_seconds:.3f} seconds until {hour:02}:{minute:02}.\nThe page will refresh ~15 seconds before the target time.\nDO NOT TOUCH YOUR COMPUTER except to ensure that it does not fall asleep.")
         time_obj.sleep(wait_seconds)
 
     # Refresh the page at the target time
+    print("\nTarget time reached. Refreshing the page...")
     driver.refresh()
-    print("\nRefreshing the page...")
 
     try:
         register_button = WebDriverWait(driver, 6).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Start Registration')]")))
@@ -127,6 +130,8 @@ if __name__ == "__main__":
         confirm_register_button = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Register')]")))
         confirm_register_button.click()
         print("\nClicked 'Register'")
+
+        print("\nCourse registration successful. Close Chrome and the terminal to exit.")
 
     except Exception as e:
         print("\nERROR FINDING/CLICKING REGISTRATION BUTTON(S).", e)
