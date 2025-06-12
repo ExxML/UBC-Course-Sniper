@@ -22,7 +22,7 @@ pip install -r requirements.txt
 
 *Connect to Ethernet for best possible results!*
 1. ⭐ **IMPORTANT:** Before running `main.py`, modify the `hour` and `minute` variables to match your course registration time **in PST, as assigned by UBC**. These variables are marked with the comment: `### MODIFY TO MATCH YOUR COURSE REGISTRATION TIME IN PST (24-hour time) ###`. ⭐
-2. Run `main.py`. **You will be prompted to run the program as Administrator so that your computer time can be automatically synced.**
+2. Run `main.py`. It is recommended to run this program AT LEAST 30 seconds prior to your course registration opening time. **You will be prompted to run the program as Administrator so that your computer time can be automatically synced.**
 3. In the Chrome window that opens, log in to UBC Workday with your CWL.
 4. Open the Saved Schedule you want to register.
 ![alt text](SavedSchedulePreview.png)
