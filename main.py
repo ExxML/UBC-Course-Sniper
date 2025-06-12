@@ -111,7 +111,7 @@ if __name__ == "__main__":
     if now > target_time:
         print(f"\nIt is past {hour:02}:{minute:02}.")
     else:
-        wait_seconds = (target_time - now).total_seconds() - 0.100  # Decreased wait time to ensure scripts starts as close to the opening time as possible
+        wait_seconds = (target_time - now).total_seconds() - 0.150  # Decreased wait time to ensure scripts starts as close to the opening time as possible
         print(f"\nWaiting {wait_seconds:.3f} seconds until {hour:02}:{minute:02}.\nDO NOT TOUCH YOUR COMPUTER except to ensure that it does not fall asleep.")
         time_obj.sleep(wait_seconds)
 
