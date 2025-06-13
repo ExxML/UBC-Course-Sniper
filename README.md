@@ -6,7 +6,7 @@ UBC Course Sniper is a Python script for Windows that automates the process of r
 
 Note: At the time of recording this demo, course registration has already opened. To clarify, this script should be run BEFORE course registration opens.
 
-Video link: https://jmp.sh/pkp5Fhnm
+Video link: https://jmp.sh/ifmnWIuA
 
 ## Installation
 
