@@ -11,6 +11,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
 
 def set_chrome_settings():
     chrome_options = Options()
@@ -49,7 +50,7 @@ def set_chrome_settings():
     }
     chrome_options.add_experimental_option("prefs", prefs)
 
-    chrome_service = Service("./chromedriver.exe")
+    chrome_service = Service(ChromeDriverManager().install())
     chrome_service.creation_flags = 0x8000000  # Suppress logs
 
     return chrome_service, chrome_options
