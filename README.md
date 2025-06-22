@@ -10,8 +10,9 @@ Video link: https://jmp.sh/5EIghfFU
 
 ## Installation
 
-1. Install Python 3.12.
-2. Initialize a virtual environment and install the required dependencies by running:
+1. Clone the repository.
+2. Install Python 3.12.
+3. Initialize a virtual environment, then install the required dependencies by running:
 ```bash
 pip install -r requirements.txt
 ```
