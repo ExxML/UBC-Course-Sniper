@@ -104,7 +104,7 @@ if __name__ == "__main__":
 
     reg_time = time(hour, minute)
     form_reg_time = reg_time.strftime("%I:%M %p").lstrip("0").lower()  # Formatted as 12-hour time
-    input(f"Welcome to UBC Course Sniper!\nInstructions:\n 1. ⭐ENSURE YOUR COURSE REGISTRATION TIME (PST) IS SET CORRECTLY!⭐\n    You have set your course registration time to {form_reg_time} PST.\n 2. Manually log in to UBC Workday with your CWL.\n 3. Open the Saved Schedule you want to register.\n 4. Press `Enter` in the terminal to start the script.")
+    input(f"Welcome to UBC Single-Term Course Sniper!\nInstructions:\n 1. ⭐ENSURE YOUR COURSE REGISTRATION TIME (PST) IS SET CORRECTLY!⭐\n    You have set your course registration time to {form_reg_time} PST.\n 2. Manually log in to UBC Workday with your CWL.\n 3. Open the Saved Schedule you want to register.\n 4. Press `Enter` in the terminal to start the script.")
 
     sync_windows_time()
 
